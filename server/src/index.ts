@@ -4,6 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from './middleware/error-handler';
 import connectDatabase from './database/connection';
+import locationsRouter from './routes/Location.routes';
 
 dotenv.config();
 
@@ -24,5 +25,8 @@ server.use(errorHandler);
 server.use('/api/healthcheck', (req, res) =>
   res.send({ success: true, data: 'The server is up and running' })
 );
+
+// ROUTES
+server.use('/api/locations', locationsRouter);
 
 export default server;
