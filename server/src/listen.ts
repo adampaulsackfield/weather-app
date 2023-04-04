@@ -1,3 +1,4 @@
+import logger from './helpers/logger';
 import server from './index';
 
 // PORT
@@ -6,5 +7,5 @@ const PORT: number = parseInt(process.env.PORT as string, 10);
 
 // Start the Server
 server.listen(PORT, () => {
-  console.log(`Server is running on PORT:${PORT}`);
+  logger(`Server is running on PORT:${PORT}`, 'INFO');
 });

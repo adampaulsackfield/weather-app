@@ -3,10 +3,14 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from './middleware/error-handler';
+import connectDatabase from './database/connection';
 
 dotenv.config();
 
 const server = express();
+
+// DATABASE
+connectDatabase();
 
 // MIDDLEWARE
 server.use(helmet());
