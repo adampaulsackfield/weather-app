@@ -4,6 +4,6 @@ import { getLocations } from '../controllers/Location.controller';
 
 const locationsRouter = express.Router();
 
-locationsRouter.route('/').get(getLocations);
+locationsRouter.route('/').post(getLocations);
 
 export default locationsRouter;

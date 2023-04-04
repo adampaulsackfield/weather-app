@@ -1,5 +1,3 @@
-// # http://api.weatherapi.com/v1/current.json?key=5884d39ee0e345d6b59101611230404&q=London&aqi=no
-
 import axios from 'axios';
 
 const getWeather = async (location: string) => {
