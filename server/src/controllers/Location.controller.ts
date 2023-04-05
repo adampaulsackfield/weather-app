@@ -17,32 +17,31 @@ const getLocations = async (
 
     if (!location) throw new HttpException(400, '', 'Missing location field');
 
-    let locations: any[] = await Location.findAll({
-      where: { location: location },
-    });
-
     const weather = await getWeather(location);
 
-    if (locations.length === 0) {
-      // If the location does not exist in the database, create a new location
-      const locationData = await Location.create({
-        id: uuidv4(),
-        location,
-        history: [weather.current],
-      });
-      locations = [locationData];
+    if (weather.message)
+      throw new HttpException(400, '', `${weather.message}: ${location}`);
+
+    const [record, created]: [any, any] = await Location.findOrCreate({
+      where: { location: location },
+      defaults: { id: uuidv4(), location: location, history: [] },
+    });
+
+    if (created) {
+      record.history = [weather.current];
+      await record.save();
     } else {
-      // If the location exists in the database, update its history field
-      const updatedLocation = await Location.update(
-        { history: [...locations[0].history, weather.current] },
-        { where: { location: location } }
-      );
-      locations[0].history.push(weather.current);
+      record.history = [...record.history, weather.current];
+      await record.save();
     }
 
-    res
-      .status(200)
-      .send({ success: true, historicalData: locations, weather: weather });
+    record.history.shift();
+
+    res.status(200).send({
+      success: true,
+      historicalData: record.history,
+      weather: weather,
+    });
   } catch (error: any) {
     next(error);
   }

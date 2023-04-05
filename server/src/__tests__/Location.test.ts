@@ -25,7 +25,7 @@ const ENDPOINT = '/api/locations';
 describe('LOCATIONS', () => {
   describe('GET /api/locations', () => {
     it('should return the weather for a given location, if it is the first time seeing that location', () => {
-      const location = 'Manchester';
+      const location = 'Bolton';
 
       return request(server)
         .post(ENDPOINT)
@@ -47,7 +47,6 @@ describe('LOCATIONS', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.success).toBe(true);
-          console.log(res.body);
           expect(res.body.historicalData.length).toBe(1);
           expect(res.body.weather.location.name).toBeDefined();
         });
@@ -64,9 +63,22 @@ describe('LOCATIONS', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.success).toBe(true);
-          console.log(res.body);
           expect(res.body.historicalData.length).toBe(1);
           expect(res.body.weather.location.name).toBeDefined();
+        });
+    });
+
+    it('it should return an error message if the location is not found', async () => {
+      const location = 'madeupville';
+
+      return request(server)
+        .post(ENDPOINT)
+        .send({ location })
+        .expect(400)
+        .then((res) => {
+          expect(res.body.error).toEqual(
+            `No matching location found.: ${location}`
+          );
         });
     });
   });

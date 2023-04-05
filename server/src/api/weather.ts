@@ -8,7 +8,7 @@ const getWeather = async (location: string) => {
 
     return weather.data;
   } catch (error: any) {
-    console.log(error);
+    return error.response.data.error;
   }
 };
 

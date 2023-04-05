@@ -10,7 +10,6 @@ const errorHandler = (
 ) => {
   const status = error.statusCode || error.status || 500;
 
-  console.log('*', status, error);
   response.status(status).send(error);
 };
 
