@@ -81,5 +81,17 @@ describe('LOCATIONS', () => {
           );
         });
     });
+
+    it('it should return an error message if the location field is empty', async () => {
+      const location = '';
+
+      return request(server)
+        .post(ENDPOINT)
+        .send({ location })
+        .expect(400)
+        .then((res) => {
+          expect(res.body.error).toEqual('Missing location field');
+        });
+    });
   });
 });

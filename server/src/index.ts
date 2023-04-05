@@ -5,8 +5,6 @@ import helmet from 'helmet';
 import errorHandler from './middleware/error-handler';
 import connectDatabase from './database/connection';
 import locationsRouter from './routes/Location.routes';
-import { ErrorRequestHandler } from 'express';
-import { Request, Response, NextFunction } from 'express';
 
 dotenv.config();
 

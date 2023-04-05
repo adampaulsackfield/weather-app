@@ -9,11 +9,11 @@ import getWeather from '../api/weather';
 
 const getLocations = async (
   req: Request,
-  res: Response,
+  res: Response<Record<string, any>>,
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { location } = req.body || {};
+    const { location } = req.body;
 
     if (!location) throw new HttpException(400, '', 'Missing location field');
 
