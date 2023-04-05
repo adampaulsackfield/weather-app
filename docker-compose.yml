@@ -56,7 +56,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
-    env_file: ./.env
+    # env_file: ./.env
     environment:
       MYSQL_ROOT_PASSWORD: $DB_PASSWORD
       MYSQL_DATABASE: $DB_NAME
