@@ -13,18 +13,18 @@ const getLocations = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { location } = req.body;
+    const { name } = req.body;
 
-    if (!location) throw new HttpException(400, '', 'Missing location field');
+    if (!name) throw new HttpException(400, '', 'Missing location field');
 
-    const weather = await getWeather(location);
+    const weather = await getWeather(name);
 
     if (weather.message)
-      throw new HttpException(400, '', `${weather.message}: ${location}`);
+      throw new HttpException(400, '', `${weather.message}: ${name}`);
 
     const [record, created]: [any, any] = await Location.findOrCreate({
-      where: { location: location },
-      defaults: { id: uuidv4(), location: location, history: [] },
+      where: { location: name },
+      defaults: { id: uuidv4(), location: name, history: [] },
     });
 
     if (created) {
