@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS weather_app;
+
+CREATE DATABASE weather_app;
